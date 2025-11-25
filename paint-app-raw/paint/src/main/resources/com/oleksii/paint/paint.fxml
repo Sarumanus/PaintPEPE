@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.oleksii.paint.PaintController">
+
+    <!-- Hlavní horní panel -->
+    <top>
+        <VBox spacing="3">
+            <!-- První řádek: barva a velikost -->
+            <ToolBar>
+                <items>
+                    <Label text="Barva:"/>
+                    <ColorPicker fx:id="colorPicker" />
+                    <Separator orientation="VERTICAL"/>
+                    <Label text="Velikost:"/>
+                    <Slider fx:id="brushSize"
+                            min="1" max="21" value="2"
+                            majorTickUnit="4"
+                            blockIncrement="1"
+                            snapToTicks="true"
+                            showTickMarks="true"
+                            showTickLabels="false"/>
+
+                    <Separator orientation="VERTICAL"/>
+                    <Button text="Undo" onAction="#undo"/>
+                    <Button text="Redo" onAction="#redo"/>
+                    <Separator orientation="VERTICAL"/>
+                    <Button text="Vymazat" onAction="#clearCanvas"/>
+                </items>
+            </ToolBar>
+
+            <!-- Druhý řádek: nástroje a efekty -->
+            <ToolBar>
+                <items>
+                    <Label text="Nástroj:"/>
+                    <ComboBox fx:id="toolBox" prefWidth="130">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Štětec"/>
+                                <String fx:value="Sprej"/>
+                                <String fx:value="Zvýrazňovač"/>
+                                <String fx:value="Kaligrafie"/>
+                                <String fx:value="Hvězda"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+
+                    <Separator orientation="VERTICAL"/>
+
+                    <Label text="Extra:"/>
+                    <ComboBox fx:id="extraBox" prefWidth="130">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Kapátko"/>
+                                <String fx:value="Guma"/>
+                                <String fx:value="Lupa"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+
+                    <Separator orientation="VERTICAL"/>
+
+                    <MenuButton text="Efekty">
+                        <items>
+                            <MenuItem text="Kontrast" onAction="#applyEffect" userData="Contrast"/>
+                            <MenuItem text="Sepia" onAction="#applyEffect" userData="Sepia"/>
+                            <MenuItem text="Posun barev" onAction="#applyEffect" userData="Posun"/>
+                            <MenuItem text="Inverze" onAction="#applyEffect" userData="Inverze"/>
+                        </items>
+                    </MenuButton>
+
+                    <Separator orientation="VERTICAL"/>
+
+                    <MenuButton text="Soubor">
+                        <items>
+                            <MenuItem text="Otevřít" onAction="#loadImage"/>
+                            <MenuItem text="Uložit" onAction="#saveImage"/>
+                            <MenuItem text="About" onAction="#showInfoWindow"/>
+                            <MenuItem text="Exit" onAction="#exitApp"/>
+                        </items>
+                    </MenuButton>
+                </items>
+            </ToolBar>
+        </VBox>
+    </top>
+
+    <!-- Plátno -->
+    <center>
+        <AnchorPane>
+            <Canvas fx:id="canvas" width="950" height="650"/>
+        </AnchorPane>
+    </center>
+
+</BorderPane>
